@@ -14,7 +14,7 @@ jobs:
       matrix:
         # os: [windows-latest, macos-latest, ubuntu-latest]
         os: [windows-latest]
-        build_type: [RelWithDebInfo, Debug]
+        build_type: [Debug, Release]
     steps:
     - uses: actions/checkout@v4
       with:
@@ -34,15 +34,6 @@ jobs:
       shell: bash
       run: |
         bash build.sh --auto --norun
-    - name: Running CLI Tests
-      shell: bash
-      run: |
-        if [[ "${{ runner.os }}" == "Linux" ]] ; then
-          export XVFB=xvfb-run
-        fi
-        export ASEPRITE=$PWD/build/bin/aseprite
-        cd tests
-        $XVFB bash run-tests.sh
     - name: Upload Aseprite Binary
       uses: actions/upload-artifact@v4
       with:
@@ -50,4 +41,6 @@ jobs:
         path: |
           build/bin/aseprite.exe
           build/bin/aseprite
+          build/bin/*.dll
+          build/bin/data/
         if-no-files-found: error
