@@ -5,13 +5,15 @@ on:
     - '.github/workflows/build-auto.yml'
     - 'build.sh'
     - 'laf'
+  workflow_dispatch:
 jobs:
   build-auto:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
+        # os: [windows-latest, macos-latest, ubuntu-latest]
+        os: [windows-latest]
         build_type: [RelWithDebInfo, Debug]
     steps:
     - uses: actions/checkout@v4
